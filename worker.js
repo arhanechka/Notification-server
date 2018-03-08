@@ -26,7 +26,7 @@ class Worker extends SCWorker {
     healthChecker.attach(this, app);
 
     httpServer.on('request', app);
-    var clientData;
+   
     var count = 0;
     /*
       In here we handle our incoming realtime connections and listen for events.
@@ -36,20 +36,6 @@ class Worker extends SCWorker {
       // Some sample logic to show how to handle client events,
       // replace this with your own logic
 
-      socket.on('mychan', function (data) {
-        count++;
-        console.log('Handled logs', data);
-        getData(data);
-        scServer.exchange.publish('sample', data);
-      });
-
-      function getData(data){
-        console.log("this is data")
-
-        clientData = data;
-        console.log(clientData)
-      }
-     module.exports = clientData;
       // socket.on('sampleClientEvent', function (data) {
       //   count++;
       //   console.log('Handled sampleClientEvent', data);
@@ -63,7 +49,7 @@ class Worker extends SCWorker {
       }, 10000);
   
        console.log(scServer.clientsCount)
-        socket.emit('mychan', "hello, ann1")
+    //    socket.emit('mychan', "hello, ann1")
       socket.on('disconnect', function () {
         clearInterval(interval);
       });
