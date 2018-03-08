@@ -17,7 +17,8 @@ amqp.connect('amqp://localhost', function(err, conn) {
     
     Messages.sync({force: false}).then(() => {
         return Messages.create({
-          message: msg.content.toString()
+          message: msg.content.toString(),
+          status: false
         }).then(function(inserted){
      console.log("dataForSocket")
      console.log(inserted.dataValues)
@@ -32,7 +33,7 @@ amqp.connect('amqp://localhost', function(err, conn) {
   });
 });
 
-function startSocket(msg) {
+function startSocket() {
     socket = SocketCluster.create(
      {
     port: 8000,

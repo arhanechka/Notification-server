@@ -9,7 +9,8 @@ const Messages = sequelize.define('messages', {
     },
     message: {
       type: Sequelize.STRING
-    }
+    },
+    status: Sequelize.BOOLEAN
   });
 
   module.exports = Messages
