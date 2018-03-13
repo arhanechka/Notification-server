@@ -1,11 +1,15 @@
 <template>
   <div id="app">
-    <socket-component></socket-component>
+   
+   <router-view></router-view>
+
   </div>
 </template>
 
 <script>
-import SocketComponent from './SocketComponent.vue'
+
+import Login from './components/Login'
+
 export default {
   name: 'app',
   data () {
@@ -14,7 +18,9 @@ export default {
     }
   },
   components:{
-    SocketComponent
+    
+  
+    
   }
 }
 </script>
