@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-   
+   <component :is="mode" @confirmed="mode = 'app-header'" @logout="logged($event)"></component>
    <router-view></router-view>
 
   </div>
@@ -9,18 +9,29 @@
 <script>
 
 import Login from './components/Login'
+import Header from './components/Header'
 
 export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      mode: 'app-login',
+
     }
   },
   components:{
-    
-  
-    
+    appLogin: Login,
+    appHeader: Header
+  },
+  methods:{
+  logged(logout) {
+      if (logout) {
+        this.mode = 'app-login';
+      } else {
+        this.mode = 'app-header';
+      }
+    }
   }
 }
 </script>

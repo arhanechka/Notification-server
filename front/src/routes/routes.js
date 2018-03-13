@@ -6,7 +6,7 @@ import DataBase from '../components/DataBase.vue'
 import LiveMessages from '../components/LiveMessages.vue'
 
 export const routes = [
-    {path: '/', component : Login},
+    // {path: '/', component : Login},
     {path: '/home', component : Home},
     {path: '/db', component : DataBase},
     {path: '/live', component : LiveMessages},

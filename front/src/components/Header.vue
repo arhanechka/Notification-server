@@ -12,9 +12,19 @@
       <router-link to='/live' class="nav-item nav-link" href="#">Live messages</router-link>
      </div>
     </div>
-    <ul class="navbar-nav navbar-right" >
-     <router-link to='/' class="navbar-brand" href="#">Logout</router-link>
+    <ul class="navbar-nav navbar-right" @click="logout">
+     <router-link to='/' class="navbar-brand" href="#" >Logout</router-link>
     </ul>
   
 </nav>
 </template>
+<script>
+export default {
+  methods:{
+    logout(){
+      console.log("in logout")
+      this.$emit('logout', true)
+    }
+  }
+}
+</script>

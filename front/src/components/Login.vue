@@ -32,7 +32,7 @@ export default {
     checkUser(){
       if (this.email = 'aranvic1976@gmail.com' && this.password == '1111'){
         console.log(true)
-        this.$router.push('/home')
+        this.$emit('confirmed');
         
       }
     }
