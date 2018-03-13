@@ -4,11 +4,17 @@ const app = express();
 const bodyParser = require('body-parser');
 var messages = require('./routes/messages');
 var users = require('./routes/users');
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
 app.use('/messages', messages);
 app.use('/users', users);
 
