@@ -1,5 +1,4 @@
-SocketCluster Sample App
+Notification server
 ======
-
-This is a sample SocketCluster app.
+RabbitMQ + SocketCluster + Nodejs Express Rest API + MySQL database + Vue interface
 
