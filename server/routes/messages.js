@@ -4,8 +4,10 @@ var Message = require('../../db_models.js/messages_model')
 
 
 router.get('/', function (req, res) {
-    Message.findAll().then(message => {
-       res.json(message) 
+    Message.findAll().then(messages => {
+       res.json({
+        success: true, 
+        msg: messages}) 
        })
        .catch(function (e) {
         console.error("Problems with database");
@@ -16,14 +18,19 @@ router.get('/', function (req, res) {
         }); 
     });
 
-router.get('/status', function (req, res) {
-    let status = 1;
+router.get('/:status', function (req, res) {
+    let status = req.params.status;
+    
     Message.findAll({
         where: {
           status: status
         }
       }).then(message => {
-        res.json(message) 
+        
+        res.json({
+          success: true,
+          msg: message
+        }) 
         })
         .catch(function (e) {
             console.error("Problems with database");
@@ -36,8 +43,8 @@ router.get('/status', function (req, res) {
    
 
 router.put('/updateStatus', function (req, res) {
-    let status = 1;
-    let id = 10;
+    let status = req.body.status;
+    let id = req.body.id;
      Message.update({
         status: status,
       }, {
@@ -45,7 +52,11 @@ router.put('/updateStatus', function (req, res) {
           id: id
         }
       }).then(message => {
-        res.json(message) 
+        console.log(message)
+        res.json({
+          success: true,
+          msg: message
+        }) 
         })
         .catch(function (e) {
             console.error("Problems with database");

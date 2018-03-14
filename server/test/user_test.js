@@ -32,18 +32,15 @@ chai.use(chaiHttp);
     describe('/GET user by unexisted email', () => {
         it('it should NOT find and should return FALSE and proper msg', (done) => {
             chai.request(server)
-                .get('/users/user')
+                .post('/users/signin')
                 .type('json')
                 .send({
-                    email: "aranvic1977@gmail.com",
-                    password: "1111"
+                    email: "none@gmail.com"
                 })
                 .end((err, res) => {
-                    console.log(res.body.msg);
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('success').eql(false);
-                    res.body.should.have.property('msg').eql('no such user in database.');
                     done();
                 });
         });

@@ -3,20 +3,23 @@ var router = express.Router();
 var User = require('../../db_models.js/user_model')
 
 
-router.get('/user', function (req, res) {
-    let email = 'aranvic1975@gmail.com';
-    let password = '1111';
+router.post('/signin', function (req, res) {
+   
+    let email = req.body.email;
+    // let email = 'new@gmail.com';
+    // let password = '1111';
     User.findAll({
         where: {
           email: email
         }
-      }).then(users => {
-        console.log("users1");
-        console.log(users);
-        res.json(users) 
-       })
+      }).then(user => {
+      
+        res.json({
+            success: false,
+            msg:user 
+       })})
        .catch(function (e) {
-        console.error("Problems with database");
+        console.error(e);
         res.json({
             success: false,
             msg: 'no such user in database.'
@@ -41,8 +44,8 @@ router.get('/', function (req, res) {
     });
 
 router.post('/signup', function (req, res) {
-    let email = 'new2@gmail.com';
-    let password = '1234'
+    var email = req.body.email;
+    var password = req.body.password;
     User.create({
       email: email,
       password: password
