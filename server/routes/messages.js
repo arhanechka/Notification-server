@@ -1,95 +1,86 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../mysql')
-var Message = require('../models/messages')
+var Message = require('../../db_models.js/messages_model')
+const Sequelize = require('sequelize');
+var sequelize = require('../../sequilize')
 
 router.get('/', function (req, res) {
-    Message.getAllMessages(function(err,rows){
-        if(err)
-        {
-            res.json(err);
-        }
-        else{
-            res.json(rows);
-        }
-    })
-});
+    Message.findAll().then(message => {
+       res.json(message) 
+       })
+       .catch(function (e) {
+        console.error("Problems with database");
+        res.json(e)
+        }); 
+    });
 
 router.get('/status', function (req, res) {
     let status = 1;
+    Message.findAll({
+        where: {
+          status: status
+        }
+      }).then(message => {
+        res.json(message) 
+        })
+        .catch(function (e) {
+            console.error("Problems with database");
+            res.json(e)
+        }); 
+     });
+   
+    // if (!status ) {
+    //     return res.status(400).send({ error: message_id, message: 'Please check your data' });
+    //    }
     
-    // let status = req.body.status;
-    // let id = req.body.id;
-    if (!status ) {
-        return res.status(400).send({ error: message_id, message: 'Please check your data' });
-       }
-    Message.getMessageByStatus(status,function(err,rows){
-        if(err)
-        {
-            res.json(err);
-        }
-        else{
-            res.json(rows);
-        }
-    });
-}); 
+
 
 router.put('/updateStatus', function (req, res) {
     let status = 1;
-    let id = 17;
-    // let status = req.body.status;
-    // let id = req.body.id;
-    if (!status || !id ) {
-        return res.status(400).send({ error: message_id, message: 'Please check your data' });
-       }
-    Message.updateMessageStatus(id,status,function(err,rows){
-        if(err)
-        {
-            res.json(err);
+    let id = 10;
+     Message.update({
+        status: status,
+      }, {
+        where: {
+          id: id
         }
-        else{
-            res.json(rows);
-        }
-    });
+      }).then(message => {
+        res.json(message) 
+        })
+        .catch(function (e) {
+            console.error("Problems with database");
+            res.json(e)
+            }); 
+    // if (!status || !id ) {
+    //     return res.status(400).send({ error: message_id, message: 'Please check your data' });
+    //    }
+  
 });
 
 router.get('/id', function (req, res) {
     let id = 15;
-    
-    // let status = req.body.status;
-    // let id = req.body.id;
-    if (!id ) {
-        return res.status(400).send({ error: message_id, message: 'Please check your data' });
-       }
-    Message.getMessageById(id,function(err,rows){
-        if(err)
-        {
-            res.json(err);
+    // if (!id ) {
+    //     return res.status(400).send({ error: message_id, message: 'Please check your data' });
+    //    }
+       Message.findAll({
+        where: {
+          id: id
         }
-        else{
-            res.json(rows);
-        }
-    });
-}); 
-
-router.get('/messages', function (req, res) {
-    db.query('SELECT message, status FROM messages WHERE status = 0 AND id < 20', function (error, results, fields) {
-        if (error) throw error;
-        return res.send({ error: false, data: results, message: 'Messages list.' });
-    });
-}); 
-
-router.put('/messages', function (req, res) {
-    let message_id = req.body.message_id;
-   
-    if (!message_id) {
-        return res.status(400).send({ error: message_id, message: 'Please provide message_id' });
-    }
+      }).then(message => {
+        res.json(message) 
+        })
+        .catch(function (e) {
+            console.error("Problems with database");
+            res.json(e)
+            }); 
+     });
     
-    db.query('UPDATE messages SET status = 1 WHERE id = ?', message_id, function (error, results, fields) {
-        if (error) throw error;
-        return res.send({ error: false, data: results, message: 'Message updated.' });
-    });
-}); 
+// router.get('/messages', function (req, res) {
+//     db.query('SELECT message, status FROM messages WHERE status = 0 AND id < 20', function (error, results, fields) {
+//         if (error) throw error;
+//         return res.send({ error: false, data: results, message: 'Messages list.' });
+//     });
+// }); 
+
 
 module.exports = router;

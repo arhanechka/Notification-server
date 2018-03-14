@@ -1,10 +1,23 @@
 var db = require('../mysql')
+var UserModel = require('../../db_models.js/user_model')
+const Sequelize = require('sequelize');
+var sequelize = require('../../sequilize')
+
 
 var User={
 
-getAllUsers:function(callback){
+getAllUsers:function(){
+    console.log("UserModel")
+    console.log(UserModel)
+    UserModel.findAll().then(users => {
+       console.log("users1");
+       console.log(users[0].dataValues);
+       return users; 
+      })
+      
 
-return db.query("Select * from users",callback);
+      
+// return db.query("Select * from users",callback);
 
 },
 getUserById:function(id,callback){

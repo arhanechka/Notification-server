@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-var sequelize = require('./sequilize')
+var sequelize = require('../sequilize')
 
 const Messages = sequelize.define('messages', {
     id: {

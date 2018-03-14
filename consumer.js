@@ -1,8 +1,9 @@
 var amqp = require('amqplib/callback_api');
 var SocketCluster = require('socketcluster-client');
 const Sequelize = require('sequelize');
-var Messages = require('./databaseModel')
+var Messages = require('./db_models.js/messages_model')
 var sequelize = require('./sequilize')
+var config = require('./config')
 var socket
 
 startSocket();
@@ -29,15 +30,21 @@ amqp.connect('amqp://localhost', function(err, conn) {
       console.log(" [x] Done");
       ch.ack(msg);
       }, 5000);}
-    }, {noAck: false}); }); });
+    }, {noAck: false})
+    .catch(function (e) {
+      console.error("Problems with database");
+      res.json(e)
+      }); 
+     }); 
+    });
   });
 });
 
 function startSocket() {
     socket = SocketCluster.create(
      {
-    port: 8000,
-   hostname: 'localhost'
+   port: config.socketPort,
+   hostname: config.host
    }
  );
   socket.on('connect', function() {
