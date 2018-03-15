@@ -9,13 +9,10 @@ const mutations = {
     'GET_UNREAD' (state, messages){
         state.messages = messages
     },
-    'MAKE_READ' (state, index){
+    'REMOVE_READ' (state, index){
         state.messages.splice(index,1)
         console.log(state.messages.length)
-
     }
-    
-  
 };
 
 const actions = {
@@ -45,12 +42,11 @@ const actions = {
         .put(url,{id:id, status:status})
         .then(response => {
          console.log(response.data.msg)
-         commit('MAKE_READ', param.id)
+         commit('REMOVE_READ', param.id)
          })
         .catch(error => {
           console.log(error);
         })
-        //getUnreadMessages();
     }
 }
      

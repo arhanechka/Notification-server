@@ -2,10 +2,12 @@ var amqp = require('amqplib/callback_api');
 var SocketCluster = require('socketcluster-client');
 var Messages = require('../db_models/messages_model')
 var config = require('../config/config')
-var socket
+var socket = require('../config/socket')
 
-startSocket();
+//startSocket();
 amqp.connect('amqp://localhost', function(err, conn) {
+  
+ 
   conn.createChannel(function(err, ch) {
     var q = 'task_queue';
     ch.assertQueue(q, {durable: true});
@@ -22,7 +24,12 @@ amqp.connect('amqp://localhost', function(err, conn) {
      console.log("dataForSocket")
      console.log(inserted.dataValues)
      
-     if (socket.getState()=='open'){
+      if (socket.getState()=='open'){
+       channel = socket.subscribe('mychan');
+    //   channel.watch(handler);
+    //   function handler(data) {
+    //       console.log(data.message + ' - ws');
+    //     }
       channel.publish(inserted.dataValues)
       setTimeout(function() {
       console.log(" [x] Done");
@@ -36,19 +43,19 @@ amqp.connect('amqp://localhost', function(err, conn) {
   });
 
 
-function startSocket() {
-    socket = SocketCluster.create(
-     {
-   port: config.socketPort,
-   hostname: config.host
-   }
- );
-  socket.on('connect', function() {
-    console.log('CONNECTED');
-  });
-  channel = socket.subscribe('mychan');
-  channel.watch(handler);
-  function handler(data) {
-   console.log(data.message + ' - ws');
-  }
- }
+// function startSocket() {
+//     socket = SocketCluster.create(
+//      {
+//    port: config.socketPort,
+//    hostname: config.host
+//    }
+//  );
+//   socket.on('connect', function() {
+//     console.log('CONNECTED');
+//   });
+//   channel = socket.subscribe('mychan');
+//   channel.watch(handler);
+//   function handler(data) {
+//    console.log(data.message + ' - ws');
+//   }
+//  }

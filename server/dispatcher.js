@@ -2,7 +2,7 @@ var config = require('../config/config')
 var sequelize = require('../config/db')
 var User = require('../db_models/user_model')
 var Messages = require('../db_models/messages_model')
-
+var socket = require('../config/socket')
 
 
 module.exports = function(app)
@@ -23,10 +23,15 @@ sequelize
         .catch(error => {
           console.log("Not synced : " + error);
         });
-    app.listen(config.restPort, () => {
+        app.listen(config.restPort, () => {
             console.log('Express listening on port:', config.restPort);
           });
+
+          socket.on('connect', function() {
+            console.log('Socket connected');
+          });
     })
+    
     .catch(err => {
         console.error("Unable to connect to the database:", err);
       });

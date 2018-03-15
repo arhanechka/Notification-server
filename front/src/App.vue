@@ -1,8 +1,9 @@
 <template>
   <div id="app">
+
    <component :is="mode" @confirmed="mode = 'app-header'" @logout="logged($event)"></component>
    <router-view></router-view>
-
+<p>{{msg}}</p>
   </div>
 </template>
 
@@ -10,7 +11,8 @@
 
 import Login from './components/Login'
 import Header from './components/Header'
-
+var SocketCluster = require('socketcluster-client');
+var socket
 export default {
   name: 'app',
   data () {
@@ -24,6 +26,9 @@ export default {
     appLogin: Login,
     appHeader: Header
   },
+  created(){
+  this.startSocket();
+  },
   methods:{
   logged(logout) {
       if (logout) {
@@ -31,7 +36,26 @@ export default {
       } else {
         this.mode = 'app-header';
       }
-    }
+    },
+    startSocket() {
+    socket = SocketCluster.create(
+     {
+    port: 8000,
+   hostname: 'localhost'
+   }
+ );
+  socket.on('connect', function() {
+    console.log('CONNECTED');
+  });
+  var channel = socket.subscribe('mychan');
+  channel.watch(handler);
+  function handler(data) {
+   //console.log(data.message + ' - ws');
+   this.msg = data.message;
+   console.log(this.msg)
+  }
+ }
+  
   }
 }
 </script>
