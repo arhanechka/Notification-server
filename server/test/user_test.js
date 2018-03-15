@@ -9,24 +9,7 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 
-    /*
-     * Test the get / route
-     */
-    // describe('/GET', () => {
-    //     it('it should GET under construction page', (done) => {
-    //         chai.request(server)
-    //             .get('/')
-    //             .end((err, res) => {
-    //                 console.log(err);
-    //                 res.should.have.status(200);
-    //                 res.body.should.be.a('object');
-    //                 res.body.should.have.property('message').eql("Page under construction.");
-    //                 done();
-    //             });
-    //     });
-    // });
-
-    /*
+     /*
      * Test the /signup route with existent email
      */
     describe('/GET user by unexisted email', () => {

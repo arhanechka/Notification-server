@@ -16,6 +16,7 @@ amqp.connect('amqp://localhost', function(err, conn) {
     
     Messages.create({
           message: msg.content.toString(),
+          user_id: 1,
           status: false
         }).then(function(inserted){
      console.log("dataForSocket")

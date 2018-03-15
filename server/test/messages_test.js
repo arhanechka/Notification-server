@@ -30,7 +30,7 @@ describe('/GET all messages', () => {
     describe('/GET messages by status', () => {
         it('it should find and should return array of found msg with status false(unread)', (done) => {
             chai.request(server)
-                .get('/messages/0')
+                .get('/messages/status/0')
                 .type('json')
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -58,6 +58,70 @@ describe('/GET all messages', () => {
                     res.body.should.have.property('success').eql(true);
                     res.body.should.have.property('msg').be.a('Array');
                     assert.equal(res.body.msg[0], 1)
+                    done();
+                });
+        });
+    });
+
+    describe('/GET messages by user id', () => {
+        it('it should find and should return array of found msg for user_id', (done) => {
+            chai.request(server)
+                .get('/messages/1')
+                .type('json')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('success').eql(true);
+                    res.body.should.have.property('msg').be.a('Array');
+                    assert.equal(res.body.msg[0].user_id, 1)
+                    done();
+                });
+        });
+    });
+
+    describe('/GET messages by unexisting user id', () => {
+        it('it should NOT find and should return EMPTY array of found msg for user_id', (done) => {
+            chai.request(server)
+                .get('/messages/9')
+                .type('json')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('success').eql(true);
+                    res.body.should.have.property('msg').be.a('Array');
+                    assert.equal(res.body.msg.length, 0)
+                    done();
+                });
+        });
+    });
+
+    describe('/GET all unread messages by user id', () => {
+        it('it should find and should return array of found msg with status 0 for user_id', (done) => {
+            chai.request(server)
+                .get('/messages/1/0')
+                .type('json')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('success').eql(true);
+                    res.body.should.have.property('msg').be.a('Array');
+                    assert.equal(res.body.msg[0].user_id, 1)
+                    done();
+                });
+        });
+    });
+
+    describe('/GET unread messages by unexisting user id', () => {
+        it('it should NOT find and should return EMPTY array of found msg for unexisting user_id', (done) => {
+            chai.request(server)
+                .get('/messages/9/0')
+                .type('json')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('success').eql(true);
+                    res.body.should.have.property('msg').be.a('Array');
+                    assert.equal(res.body.msg.length, 0)
                     done();
                 });
         });

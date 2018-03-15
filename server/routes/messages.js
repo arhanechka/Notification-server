@@ -18,7 +18,7 @@ router.get('/', function (req, res) {
         }); 
     });
 
-router.get('/:status', function (req, res) {
+router.get('/status/:status', function (req, res) {
     let status = req.params.status;
     
     Message.findAll({
@@ -68,23 +68,48 @@ router.put('/updateStatus', function (req, res) {
    
 });
 
-router.get('/id', function (req, res) {
-    let id = 15;
+router.get('/:id', function (req, res) {
+    let user_id = req.params.id;
       Message.findAll({
         where: {
-          id: id
+          user_id: user_id
         }
-      }).then(message => {
-        res.json(message) 
+      }).then(messages => {
+        res.json({
+          success: true,
+          msg: messages}) 
         })
         .catch(function (e) {
             console.error("Problems with database");
             res.json({
               success: false,
-              msg: 'problem with updating message status by '+id +" id"
+              msg: 'problem with getting message status by '+id +" id"
             });
             }); 
      });
-    
+     
+     router.get('/:id/:status', function (req, res) {
+      let id = req.params.id;
+      let status = req.params.status;
+        Message.findAll({
+          where: {
+            user_id: id,
+            status: status
+          }
+        }).then(messages => {
+          res.json({
+            success: true,
+            msg: messages}) 
+          }) 
+          
+          .catch(function (e) {
+              console.error("Problems with database");
+              res.json({
+                success: false,
+                msg: 'problem with getting unread messages by '+id +" id"
+              });
+              }); 
+       });
+          
 
 module.exports = router;

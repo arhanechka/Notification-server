@@ -14,6 +14,7 @@ app.use(function(req, res, next) {
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true})) 
+
 dispatcher(app);
 
 app.use('/messages', messages);
