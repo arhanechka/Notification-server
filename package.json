@@ -9,7 +9,7 @@
     }
   ],
   "scripts": {
-    "dev": "node server.js",
+    "dev": "run.cmd",
     "start:docker": "node dockerwait.js && node ${SOCKETCLUSTER_MASTER_CONTROLLER:-server.js}"
   },
   "dependencies": {

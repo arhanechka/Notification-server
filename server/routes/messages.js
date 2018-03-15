@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Message = require('../../db_models.js/messages_model')
+var Message = require('../../db_models/messages_model')
 
 
 router.get('/', function (req, res) {

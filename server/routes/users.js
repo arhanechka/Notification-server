@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../../db_models.js/user_model')
+var User = require('../../db_models/user_model')
 
 
 router.post('/signin', function (req, res) {
