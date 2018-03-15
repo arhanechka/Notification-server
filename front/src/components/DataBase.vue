@@ -16,7 +16,7 @@
    </ul>
 
    </div>
-   <button type="button" class="btn btn-info" @click = "getDbMessages">Check for new unread</button>
+   <button type="button" class="btn btn-info" @click = "getUnreadMessages">Check for new unread</button>
 </div>
 </template>
 
@@ -41,7 +41,7 @@ export default {
   },
  methods:{
    ...mapActions([
-          'updateMessageStatus'
+          'updateMessageStatus', 'getUnreadMessages'
       ]),
    getDbMessages(){
    //  this.$store.dispatch('getUnreadMessages');
@@ -62,10 +62,7 @@ export default {
        status: 1
      }
      this.updateMessageStatus(param)
-    //  this.readMessages.push(this.dbMessages[index])
-    //  console.log(this.readMessages.length)
-    //  this.dbMessages.splice(index, 1);
-   }
+    }
  }
 }
 </script>
