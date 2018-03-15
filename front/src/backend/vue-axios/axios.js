@@ -1,5 +1,5 @@
 import axios from 'axios'
-var config = require('../../../../config')
+var config = require('../../../../config/config')
 
 const DEV_URL = 'http://'+config.host+':'+config.restPort
 const API_URL = process.env.API_URL || DEV_URL

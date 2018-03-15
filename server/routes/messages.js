@@ -42,9 +42,11 @@ router.get('/status/:status', function (req, res) {
      });
    
 
-router.put('/updateStatus', function (req, res) {
+router.put('/updateStatus/:id/:status', function (req, res) {
     let status = req.body.status;
+    console.log(status)
     let id = req.body.id;
+    console.log(id)
      Message.update({
         status: status,
       }, {
