@@ -11,15 +11,15 @@
 
 import Login from './components/Login'
 import Header from './components/Header'
-var SocketCluster = require('socketcluster-client');
-var socket
+var socket = require('../../config/socket')
+var channel
 export default {
   name: 'app',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
       mode: 'app-login',
-
+      mess: ['start']
     }
   },
   components:{
@@ -28,6 +28,10 @@ export default {
   },
   created(){
   this.startSocket();
+ 
+  },
+  computed:{
+   
   },
   methods:{
   logged(logout) {
@@ -37,26 +41,17 @@ export default {
         this.mode = 'app-header';
       }
     },
-    startSocket() {
-    socket = SocketCluster.create(
-     {
-    port: 8000,
-   hostname: 'localhost'
+   startSocket() {
+     console.log(socket.getState())
+     channel = socket.subscribe('mychan');
+      channel.watch(handler)
+      function handler(data) {
+         console.log(data.message + ' - ws');
+       }
+ 
    }
- );
-  socket.on('connect', function() {
-    console.log('CONNECTED');
-  });
-  var channel = socket.subscribe('mychan');
-  channel.watch(handler);
-  function handler(data) {
-   //console.log(data.message + ' - ws');
-   this.msg = data.message;
-   console.log(this.msg)
-  }
- }
-  
-  }
+    
+}
 }
 </script>
 <style>

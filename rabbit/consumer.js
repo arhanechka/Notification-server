@@ -23,7 +23,7 @@ amqp.connect('amqp://localhost', function(err, conn) {
         }).then(function(inserted){
      console.log("dataForSocket")
      console.log(inserted.dataValues)
-     
+     console.log(socket.getState())
       if (socket.getState()=='open'){
        channel = socket.subscribe('mychan');
     //   channel.watch(handler);
