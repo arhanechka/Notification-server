@@ -1,16 +1,25 @@
 <template>
 <div>
    <h1>Live Messages</h1>
-    <div class="list-group">
-   <li class="list-group-item list-group-item-action active"><h5>Unread messages</h5></li>
-   <ul  class="list-group" v-for="(ms, index) in lmes">
-     <li class="list-group-item d-flex justify-content-between align-items-center 
-     list-group-item-action list-group-item-light"
-     @click = "changeStatus(index)">{{ms.message}}
-     <span class="badge badge-primary badge-pill" >unread</span>
-     </li>
-   </ul>
- </div>
+    <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Message</th>
+      <th scope="col">Status</th>
+      </tr>
+  </thead>
+  <tbody>
+    <tr  v-for="(message, index) in lmes" @click = "changeStatus(index)">
+      <th scope="row">{{message.id}}</th>
+      <td>{{message.message}}</td>
+      <td>
+      <span class="badge badge-primary badge-pill" >unread</span>       
+         </td>
+     </tr>
+   </tbody>
+</table>
+  
 </div>
 </template>
 

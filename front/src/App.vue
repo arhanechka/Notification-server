@@ -11,8 +11,7 @@
 
 import Login from './components/Login'
 import Header from './components/Header'
-var socket = require('../../config/socket')
-var channel
+
 export default {
   name: 'app',
   data () {
@@ -26,7 +25,6 @@ export default {
   },
   
   methods:{
-    // ...mapMutations(['UPDATE_LIVE']),
   logged(logout) {
       if (logout) {
         this.mode = 'app-login';

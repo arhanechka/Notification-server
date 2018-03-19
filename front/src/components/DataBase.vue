@@ -20,7 +20,6 @@
      </tr>
    </tbody>
 </table>
-  
    <button type="button" class="btn btn-info" @click = "eraseCheckedMessages(readMessages)">Erase checked</button>
    <button type="button" class="btn btn-info" @click = "eraseCheckedMessages(messages)">Erase all</button>
 </div>
