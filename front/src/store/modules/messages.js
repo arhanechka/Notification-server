@@ -2,16 +2,22 @@ import axios from '../../backend/vue-axios/axios'
 
 
 const state = {
-    messages: []
+    messages: [],
+    liveMessages: []
 };
 
 const mutations = {
-    'GET_UNREAD' (state, messages){
+    'PUT_UNREAD' (state, messages){
         state.messages = messages
     },
     'REMOVE_READ' (state, index){
+        let mesForRemove
         state.messages.splice(index,1)
         console.log(state.messages.length)
+    },
+    'REMOVE_ALL'(state, message){
+      //  state.liveMessages.push(message);
+        console.log(state.liveMessages.length)
     }
 };
 
@@ -32,14 +38,12 @@ const actions = {
           console.log(error);
         });
      },
-     updateMessageStatus({commit}, param){
-         let id = state.messages[param.id].id;
-         let status = param.status
+     updateMessageStatus({commit}, ){
+         console.log("id")
          console.log(id)
-         let url = '/messages/updateStatus/'+id+'/'+status;
-     
+         let url = '/messages/updateStatus/'+id;
          axios
-        .put(url,{id:id, status:status})
+        .put(url)
         .then(response => {
          console.log(response.data.msg)
          commit('REMOVE_READ', param.id)
@@ -47,16 +51,20 @@ const actions = {
         .catch(error => {
           console.log(error);
         })
+    },
+    eraseAllUnread({commit}){
+        this.state.messages.splice(0)
+        commit('UPDATE_LIVE', message)
     }
 }
      
 
 
-const getters = {
-    recieveUnreadMessages (state, getters) {
-       return state.messages
+const getters =  {
+    messages: state => {
+        return state.messages
     }
-    
 }
+
 
 export default { state, mutations, actions, getters} 

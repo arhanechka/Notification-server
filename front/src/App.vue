@@ -1,9 +1,9 @@
 <template>
   <div id="app">
 
-   <component :is="mode" @confirmed="mode = 'app-header'" @logout="logged($event)"></component>
+   <!-- <component :is="mode" @confirmed="mode = 'app-header'" @logout="logged($event)"></component> -->
+   <app-header></app-header>
    <router-view></router-view>
-<p>{{msg}}</p>
   </div>
 </template>
 
@@ -17,40 +17,23 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       mode: 'app-login',
-      mess: ['start']
     }
   },
   components:{
     appLogin: Login,
     appHeader: Header
   },
-  created(){
-  this.startSocket();
- 
-  },
-  computed:{
-   
-  },
+  
   methods:{
+    // ...mapMutations(['UPDATE_LIVE']),
   logged(logout) {
       if (logout) {
         this.mode = 'app-login';
       } else {
         this.mode = 'app-header';
       }
-    },
-   startSocket() {
-     console.log(socket.getState())
-     channel = socket.subscribe('mychan');
-      channel.watch(handler)
-      function handler(data) {
-         console.log(data.message + ' - ws');
-       }
- 
-   }
-    
+    }
 }
 }
 </script>

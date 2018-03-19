@@ -1,23 +1,36 @@
 <template>
 <div>
   <h1>DataBase</h1>
-   <div class="list-group">
-   <li class="list-group-item list-group-item-action active"><h5>Unread messages</h5></li>
-   <ul  class="list-group" v-for="(message, index) in messages">
-     <li class="list-group-item d-flex justify-content-between align-items-center 
-     list-group-item-action list-group-item-light"
-     @click = "changeStatus(index)">{{message.message}}
-     <span class="badge badge-primary badge-pill" >unread</span>
-     </li>
-   </ul>
- </div>
-   <button type="button" class="btn btn-info" @click = "getUnreadMessages">Check for new unread</button>
+  <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Message</th>
+      <th scope="col">Read</th>
+      </tr>
+  </thead>
+  <tbody>
+    <tr  v-for="(message, index) in messages">
+      <th scope="row">{{message.id}}</th>
+      <td>{{message.message}}</td>
+      <td><div class="form-check">
+         <input class="form-check-input" type="checkbox" :value="message" v-model = "readMessages">
+         </div>
+         </td>
+     </tr>
+   </tbody>
+</table>
+  
+   <button type="button" class="btn btn-info" @click = "eraseCheckedMessages(readMessages)">Erase checked</button>
+   <button type="button" class="btn btn-info" @click = "eraseCheckedMessages(messages)">Erase all</button>
 </div>
 </template>
 
 <script>
 import {mapActions} from 'vuex'
 import { mapGetters } from 'vuex'
+import { mapMutations } from 'vuex'
+
 export default {
   data(){
     return{
@@ -26,23 +39,52 @@ export default {
     }
   },
  created(){
-  this.$store.dispatch('getUnreadMessages');
+  this.getUnreadMessages();
  },
  computed: {
-      ...mapGetters({
-        messages: 'recieveUnreadMessages'
-      })
+      messages(){
+          return this.$store.getters.messages;
+      }
   },
  methods:{
    ...mapActions([
           'updateMessageStatus', 'getUnreadMessages'
       ]),
+      ...mapMutations([
+        'PUT_UNREAD'
+      ]),
+
+    getUnreadMessages ()  {
+        let url = '/messages/status/0';
+        this.$http
+        .get(url)
+        .then(response => {
+         console.log(response.data.msg)
+         this.$store.commit('PUT_UNREAD', response.data.msg)
+        })
+        .catch(error => {
+          console.log(error);
+        });
+     },
     changeStatus(index){
-     let param = {
-       id: index,
-       status: 1
-     }
-     this.updateMessageStatus(param)
+     let mes = this.messages[index]
+     this.updateMessageStatus(mes.id)
+    }, 
+    eraseCheckedMessages(array){
+      console.log(array)
+      let idArray = [];
+      array.forEach(element => idArray.push(element.id))
+      let url = '/messages/updateStatuses';
+         this.$http
+        .put(url, {"data":idArray})
+        .then(response => {
+         console.log(response.data)
+         this.getUnreadMessages();
+         this.readMessages = []
+         })
+        .catch(error => {
+          console.log(error);
+        })
     }
  }
 }

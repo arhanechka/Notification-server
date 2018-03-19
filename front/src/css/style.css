@@ -85,9 +85,9 @@ fieldset {
 }
 
 input {
-  -webkit-appearance: none;
+  /* -webkit-appearance: none;
      -moz-appearance: none;
-          appearance: none;
+          appearance: none; */
   border: none;
   font: inherit;
   margin: 0;
@@ -99,6 +99,10 @@ input[type='submit'] {
   cursor: pointer;
 }
 
+input[type='checkbox'] {
+  margin: 0;
+
+}
 .form input[type='email'],
 .form input[type='password'] {
   width: 100%;

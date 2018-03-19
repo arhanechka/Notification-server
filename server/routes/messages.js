@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var Message = require('../../db_models/messages_model')
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 
 router.get('/', function (req, res) {
@@ -26,8 +28,7 @@ router.get('/status/:status', function (req, res) {
           status: status
         }
       }).then(message => {
-        
-        res.json({
+         res.json({
           success: true,
           msg: message
         }) 
@@ -42,10 +43,9 @@ router.get('/status/:status', function (req, res) {
      });
    
 
-router.put('/updateStatus/:id/:status', function (req, res) {
-    let status = req.body.status;
-    console.log(status)
-    let id = req.body.id;
+router.put('/updateStatus/:id', function (req, res) {
+    let status = 1;
+    let id = req.params.id;
     console.log(id)
      Message.update({
         status: status,
@@ -68,6 +68,34 @@ router.put('/updateStatus/:id/:status', function (req, res) {
             });
             }); 
    
+});
+
+router.put('/updateStatuses', function (req, res) {
+  let status = 1;
+  let idArray = req.body.data;
+  console.log(idArray)
+   Message.update({
+      status: status,
+    }, {
+      where: {
+        id: {
+        [Op.in]: idArray}
+      }
+    }).then(message => {
+      console.log(message)
+      res.json({
+        success: true,
+        msg: message
+      }) 
+      })
+      .catch(function (e) {
+          console.error("Problems with database");
+          res.json({
+            success: false,
+            msg: 'problem with updating message status.'
+          });
+          }); 
+ 
 });
 
 router.get('/:id', function (req, res) {
