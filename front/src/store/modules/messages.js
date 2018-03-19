@@ -14,18 +14,11 @@ const mutations = {
 
 const actions = {
      updateMessages({commit}, mes){
-         console.log("mes")
-         console.log(mes)
-         for (var i =0; i<state.messages.length; i++){
-             if (mes.id == state.messages[i].id){
-                commit('REMOVE_READ', i) 
-             }
-         }
-        //  state.messages.findIndex(element => element.id==mes.id)
-        //  .then(index=>{
-        //  console.log(index)
-        //  commit('REMOVE_READ', index)})
-      }
+        var i;
+        state.messages.filter(function(item, index) 
+        { i = index; return item.id == mes.id; })
+        commit('REMOVE_READ', i)
+       }
 }
 
 const getters =  {
