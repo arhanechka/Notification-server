@@ -16,9 +16,6 @@
 
 <script>
 import {mapActions} from 'vuex'
-import { mapGetters } from 'vuex'
-import { mapMutations } from 'vuex'
-
 var socket = require('../../../config/socket')
 var channel
 export default {
@@ -32,10 +29,7 @@ created(){
     },
  methods:{
      ...mapActions([
-          'updateMessageStatus'
-      ]),
-      ...mapMutations([
-        'REMOVE_READ'
+          'updateMessages'
       ]),
         startSocket() {
      console.log(socket.getState())
@@ -55,12 +49,12 @@ created(){
         .put(url)
         .then(response => {
          console.log(response.data.msg)
-         this.$store.commit('REMOVE_READ', id)
+         this.updateMessages(this.lmes[index])
+         this.lmes.splice(index,1)
          })
         .catch(error => {
           console.log(error);
         })
-     this.lmes.splice(index,1)
     }
     }
 }

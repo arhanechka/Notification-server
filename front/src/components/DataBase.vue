@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
 import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
 
@@ -47,10 +46,7 @@ export default {
       }
   },
  methods:{
-   ...mapActions([
-          'updateMessageStatus', 'getUnreadMessages'
-      ]),
-      ...mapMutations([
+     ...mapMutations([
         'PUT_UNREAD'
       ]),
 
@@ -66,10 +62,6 @@ export default {
           console.log(error);
         });
      },
-    changeStatus(index){
-     let mes = this.messages[index]
-     this.updateMessageStatus(mes.id)
-    }, 
     eraseCheckedMessages(array){
       console.log(array)
       let idArray = [];
