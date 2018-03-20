@@ -7,6 +7,12 @@ import store from './store/store'
 
 Vue.use(VueRouter)
 
+// Vue.filter('mesStatus', (value, status) => {
+//   console.log("value")
+//   console.log('$'+ value.toLocaleString())
+//   return '$'+ value.toLocaleString()
+// })
+
 const router = new VueRouter({
   mode: 'history',
   routes

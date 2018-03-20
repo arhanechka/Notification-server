@@ -47,6 +47,7 @@ created(){
         },
     handler(data) {
          console.log(data.message + ' - ws');
+         alert("You have a new message")
          this.lmes.push(data)
       },
       changeStatus(index){

@@ -20,6 +20,8 @@ router.get('/', function (req, res) {
         }); 
     });
 
+    
+
 router.get('/status/:status', function (req, res) {
     let status = req.params.status;
     

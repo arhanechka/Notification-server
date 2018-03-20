@@ -1,7 +1,10 @@
 <template>
 <div>
-  <h1>DataBase</h1>
-  <table class="table table-hover">
+  <h1>Unread Messages</h1>
+  <div class="container">
+  <div class="row">
+    <div class="col-9">
+      <table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">Id</th>
@@ -20,6 +23,22 @@
      </tr>
    </tbody>
 </table>
+    </div>
+    <div class="col-sm">
+     <div class="btn-group">
+  <button class="btn btn-secondary btn-info btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Live messages
+  </button>
+  <div class="dropdown-menu">
+    ...
+  </div>
+</div>
+    </div>
+    
+  </div>
+</div>
+
+  
    <button type="button" class="btn btn-info" @click = "eraseCheckedMessages(readMessages)">Erase checked</button>
    <button type="button" class="btn btn-info" @click = "eraseCheckedMessages(messages)">Erase all</button>
 </div>

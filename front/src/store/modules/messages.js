@@ -1,10 +1,14 @@
 const state = {
-    messages: []
+    messages: [],
+    allMessages: []
 };
 
 const mutations = {
     'PUT_UNREAD' (state, messages){
         state.messages = messages
+    },
+    'PUT_ALL' (state, messages){
+        state.allMessages = messages
     },
     'REMOVE_READ' (state, index){
         state.messages.splice(index,1)
@@ -24,6 +28,9 @@ const actions = {
 const getters =  {
     messages: state => {
         return state.messages
+    },
+    allMessages: state => {
+        return state.allMessages
     }
 }
 
