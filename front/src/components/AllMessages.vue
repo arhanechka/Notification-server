@@ -30,8 +30,12 @@
   </div>
   <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-end" >
-     <li class="page-item "v-for = "i in indexes">
-      <a class="page-link" href="#" tabindex="-1" @click = "setCurrentIndex(i.index)">{{i.index}}</a>
+     <li class="page-item "v-for = "i in indexes"
+     :class = "{activeted: currentIndex.index == i.index}">
+      <a class="page-link" href="#" tabindex="-1" 
+      @click = "setCurrentIndex(i.index)"
+      >
+      {{i.index}}</a>
     </li>
  
   </ul>
@@ -64,8 +68,6 @@ export default {
   },
  created(){
   this.getAllMessages();
- // this.getPortionOfMessages(this.firstIndex, this.lastIndex);
- //this.getIndexes();
  },
  computed: {
       messages(){
@@ -104,7 +106,6 @@ export default {
        let count=2;
         for (let i = 30; i<messages.length; i+=30){
             this.indexes.push({index:count, start: i})
-            console.log(this.indexes)
             count++;
         }
     }
@@ -115,7 +116,10 @@ export default {
 <style scoped>
 .danger{
     background-color: lightcoral
-    
+}
+.activeted{
+        border: solid 2px lightgreen
+
 }
 
 </style>
