@@ -47,8 +47,11 @@ created(){
         },
     handler(data) {
          console.log(data.message + ' - ws');
-         alert("You have a new message")
          this.lmes.push(data)
+         if (confirm(`You have a new message: ${data.message}`)){
+             console.log(this.lmes[length-1])
+             this.changeStatus(this.lmes.length-1)
+         }
       },
       changeStatus(index){
           console.log(this.lmes[index])

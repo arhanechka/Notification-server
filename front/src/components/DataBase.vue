@@ -26,15 +26,46 @@
     </div>
     <div class="col-sm">
      <div class="btn-group">
-  <button class="btn btn-secondary btn-info btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <li class="btn btn-secondary btn-info btn-lg dropdown-toggle" 
+  :class="{open: isDropdownOpen}"
+  @click="idDrop"
+  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Live messages
-  </button>
-  <div class="dropdown-menu">
-    ...
-  </div>
+  
+  <div class="dropdown-menu"
+  >
+<a class="dropdown-item" href="#">Action</a> 
+<a class="dropdown-item" href="#">Another action</a>
+ </div></li>
 </div>
     </div>
-    
+    <select v-model="selected">
+  <option disabled value="">Выберите один из вариантов</option>
+  <option>А</option>
+  <option>Б</option>
+  <option>В</option>
+</select>
+<span>Выбрано: {{ selected }}</span>
+<div>
+<ul >
+   <li
+                            class="dropdown"
+                            :class="{open: isDropdownOpen}"
+                            @click="idDrop">
+                        <a
+                                href="#"
+                                class="dropdown-toggle"
+                                data-toggle="dropdown"
+                                role="button"
+                                aria-haspopup="true"
+                                aria-expanded="false">Save & Load <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" >Save Data</a></li>
+                            <li><a href="#" >Load Data</a></li>
+                        </ul>
+                    </li> 
+</ul>
+</div>
   </div>
 </div>
 
@@ -47,12 +78,15 @@
 <script>
 import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
-
+// comment
 export default {
   data(){
     return{
       dbMessages: [],
-      readMessages: []
+      readMessages: [],
+      isDropdownOpen: false, 
+      selected: ''
+
     }
   },
  created(){
@@ -67,7 +101,10 @@ export default {
      ...mapMutations([
         'PUT_UNREAD'
       ]),
-
+    idDrop(){
+this.isDropdownOpen = !this.isDropdownOpen;
+console.log(this.isDropdownOpen)
+    },
     getUnreadMessages ()  {
         let url = '/messages/status/0';
         this.$http
